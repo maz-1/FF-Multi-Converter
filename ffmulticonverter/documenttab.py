@@ -50,7 +50,7 @@ class DocumentTab(QWidget):
         Check if everything is ok with documenttab to continue conversion.
 
         Checks if:
-        - unoconv is missing.
+        - unoconv or calligraconverter is missing.
         - Given file extension is same with the declared extension.
 
         Return True if all tests pass, else False.
@@ -58,12 +58,12 @@ class DocumentTab(QWidget):
         decl_ext = self.convertQCB.currentText().split(' ')[0]
 
         try:
-            if not self.parent.unoconv:
-                raise ValidationError(
-                        self.tr(
-                        'Unocov is not installed.\nYou will not be able '
-                        'to convert document files until you install it.')
-                        )
+            if self.parent.doconverter is None:
+                QMessageBox.warning(self, 'FF Multi Converter - ' + self.tr(
+                'Error!'), self.tr('Neither Unoconv nor Calligra are installed.'
+                '\nYou will not be able to convert document files until you'
+                ' install one of them.'))
+                return False
             for i in self.parent.fnames:
                 file_ext = os.path.splitext(i)[-1][1:]
                 if file_ext != decl_ext:

@@ -228,18 +228,23 @@ class MainWindow(QMainWindow):
         update self.dependenciesQL with the appropriate message.
         """
         self.vidconverter = None
+        self.doconverter = None
         if utils.is_installed('ffmpeg'):
             self.vidconverter = 'ffmpeg'
         elif utils.is_installed('avconv'):
             self.vidconverter = 'avconv'
-        self.unoconv = utils.is_installed('unoconv')
+        #self.unoconv = utils.is_installed('unoconv')
+        if utils.is_installed('unoconv'):
+            self.doconverter = 'unoconv'
+        elif utils.is_installed('calligraconverter'):
+            self.doconverter = 'calligraconverter'
         self.imagemagick = utils.is_installed('convert')
 
         missing = []
         if self.vidconverter is None:
             missing.append('ffmpeg/avconv')
-        if not self.unoconv:
-            missing.append('unoconv')
+        if not self.doconverter:
+            missing.append('unoconv/calligraconverter')
         if not self.imagemagick:
             missing.append('imagemagick')
 
@@ -457,10 +462,13 @@ class MainWindow(QMainWindow):
             return
 
         tab = self.current_tab()
-        if tab.name == 'Documents' and not self.office_listener_started:
+
+        if utils.is_installed('calligraconverter'):
+            self.office_listener_started = True
+        elif tab.name == 'Documents' and not self.office_listener_started:
             utils.start_office_listener()
             self.office_listener_started = True
-
+            
         ext_to = self.get_output_extension()
         _list = utils.create_paths_list(
                 self.fnames, ext_to, self.prefix, self.suffix,

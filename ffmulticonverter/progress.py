@@ -381,7 +381,7 @@ class Progress(QDialog):
         log_lvl(final_output, extra=log_data)
 
         return return_code == 0
-
+    
     def convert_document(self, from_file, to_file):
         """
         Create the unoconv command and execute it using the subprocess module.
@@ -393,8 +393,11 @@ class Progress(QDialog):
         """
         # note: from_file and to_file names are inside quotation marks
         to_base, to_ext = os.path.splitext(to_file[1:-1])
-
-        cmd = 'unoconv -f {0} -o {1} {2}'.format(to_ext[1:], to_file, from_file)
+        
+        if self.parent.doconverter == 'unoconv':
+            cmd = 'unoconv -f {0} -o {1} {2}'.format(to_ext[1:], to_file, from_file)
+        else:
+            cmd = 'calligraconverter --batch {0} {1}'.format(from_file, to_file)
         self.update_text_edit_signal.emit(cmd + '\n')
         child = subprocess.Popen(
                 shlex.split(cmd),
