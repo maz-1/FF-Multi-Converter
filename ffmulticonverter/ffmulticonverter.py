@@ -243,7 +243,7 @@ class MainWindow(QMainWindow):
         missing = []
         if self.vidconverter is None:
             missing.append('ffmpeg/avconv')
-        if not self.doconverter:
+        if self.doconverter is None:
             missing.append('unoconv/calligraconverter')
         if not self.imagemagick:
             missing.append('imagemagick')

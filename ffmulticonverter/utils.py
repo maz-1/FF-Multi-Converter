@@ -61,7 +61,7 @@ def start_office_listener():
     """
     # note: we cannot kill the listener with p.kill() as it is a spawned process
     # the office listener remains open even after program's termination
-    if is_installed('calligraconverter'):
+    if is_installed('unoconv'):
         p = subprocess.Popen(shlex.split("unoconv --listener"))
         while p.poll() is not None:
             time.sleep(0.1)
