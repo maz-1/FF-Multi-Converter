@@ -61,11 +61,10 @@ def start_office_listener():
     """
     # note: we cannot kill the listener with p.kill() as it is a spawned process
     # the office listener remains open even after program's termination
-    if is_installed('unoconv'):
-        p = subprocess.Popen(shlex.split("unoconv --listener"))
-        while p.poll() is not None:
-            time.sleep(0.1)
-        time.sleep(1) # wait for listener to setup correctly
+    p = subprocess.Popen(shlex.split("unoconv --listener"))
+    while p.poll() is not None:
+        time.sleep(0.1)
+    time.sleep(1) # wait for listener to setup correctly
 
 def find_presets_file(fname, lookup_dirs, lookup_virtenv):
     """

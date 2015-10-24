@@ -394,9 +394,9 @@ class Progress(QDialog):
         # note: from_file and to_file names are inside quotation marks
         to_base, to_ext = os.path.splitext(to_file[1:-1])
         
-        if self.parent.doconverter == 'unoconv':
+        if self.parent.docconverter == 'unoconv':
             cmd = 'unoconv -f {0} -o {1} {2}'.format(to_ext[1:], to_file, from_file)
-        else:
+        elif self.parent.docconverter == 'calligraconverter':
             cmd = 'calligraconverter --batch {0} {1}'.format(from_file, to_file)
         self.update_text_edit_signal.emit(cmd + '\n')
         child = subprocess.Popen(

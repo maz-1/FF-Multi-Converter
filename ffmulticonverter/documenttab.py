@@ -58,7 +58,7 @@ class DocumentTab(QWidget):
         decl_ext = self.convertQCB.currentText().split(' ')[0]
 
         try:
-            if self.parent.doconverter is None:
+            if self.parent.docconverter is None:
                 QMessageBox.warning(self, 'FF Multi Converter - ' + self.tr(
                 'Error!'), self.tr('Neither Unoconv nor Calligra are installed.'
                 '\nYou will not be able to convert document files until you'
