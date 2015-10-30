@@ -35,7 +35,7 @@ video_codecs = [
         ]
 
 audio_codecs = [
-        'aac', 'ac3', 'copy', 'libfaac', 'libmp3lame', 'libvo_aacenc',
+        'aac', 'ac3', 'copy', 'libfaac', 'libfdk_aac', 'libmp3lame', 'libvo_aacenc',
         'libvorbis', 'mp2', 'wmav2'
         ]
 
